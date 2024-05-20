@@ -16,7 +16,7 @@ c_sources=$(wildcard src/*.c)
 objects=$(patsubst src/%.cpp,bin/obj/%.cpp.o,$(cxx_sources)) $(patsubst src/%.c,bin/obj/%.c.o,$(c_sources)) $(LIBS)
 
 
-all: bin/$(BIN)
+all: bin/$(BIN) compile_commands.json
 	@rm -r bin/obj
 	
 keep: bin/$(BIN)
@@ -35,3 +35,6 @@ bin/obj/%.cpp.o: */%.cpp
 bin/obj/%.c.o: */%.c
 	@mkdir -p $(dir $@)
 	$(CC) -c -o $@ $< $(CC_FLAGS)
+
+compile_commands.json:
+	compiledb -n make
